@@ -33,12 +33,12 @@ stage2: stage2-c.o stage2.o stage2.lds Makefile
 
 # Must be smaller than 4096 bytes
 stage2.text: stage2 Makefile
-	aarch64-linux-gnu-objcopy -O binary -j .text $< $@
+	llvm-objcopy -O binary -j .text $< $@
 
 stage2-symbol.h: stage2 Makefile
-	echo -n "unsigned long stage2_libname_addr = 0x" > $@
+	/bin/echo -n "unsigned long stage2_libname_addr = 0x" > $@
 	(nm $< | grep -e ' T libname'$ | cut -f 1 -d " " | tr -d $$'\n'; echo "UL - 0x2000UL;") >> $@ || (rm $@; false)
-	echo -n "unsigned long stage2_root_cmd_addr = 0x" >> $@
+	/bin/echo -n "unsigned long stage2_root_cmd_addr = 0x" >> $@
 	(nm $< | grep -e ' T root_cmd'$ | cut -f 1 -d " " | tr -d $$'\n'; echo "UL - 0x2000UL;") >> $@ || (rm $@; false)
 
 # Must be smaller than 4096 bytes
