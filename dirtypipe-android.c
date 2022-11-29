@@ -252,10 +252,17 @@ int main(int argc, char **argv)
 	}
 
 	char base_dir[256] = {};
-	readlink("/proc/self/exe", base_dir, sizeof(base_dir) - 1);
-	*strrchr(base_dir, '/') = 0;
+
+	char *tmp;
+	if((tmp = getenv("BASE_DIR")) != NULL) {
+		strcpy(base_dir, tmp);
+	} else {
+		readlink("/proc/self/exe", base_dir, sizeof(base_dir) - 1);
+		*strrchr(base_dir, '/') = 0;
+	}
 	int run_index = load_run_index(base_dir);
 
+	printf("base dir: %s\n", base_dir);
 	printf("Run index: %d\n", run_index);
 
 	// Shellcode is placed in empty space on .text
