@@ -46,8 +46,8 @@ modprobe-payload: modprobe-payload.c Makefile
 	$(CC) $(CPPFLAGS) -Os -nostartfiles -o $@ $< -llog
 	$(STRIP) $@
 
-mymod.ko: $(MYMOD_COPY)
-	cp $(MYMOD_COPY) mymod.ko
+#mymod.ko: $(MYMOD_COPY)
+#	cp $(MYMOD_COPY) mymod.ko
 
 # Page 1: stage2.text (Up to 1 page)
 # Page 2: modprobe-payload (Up to 1 page)
